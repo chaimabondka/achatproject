@@ -3,30 +3,26 @@ pipeline {
         label 'jenkins-agent'
     }
     tools {
-        jdk 'java'
-        maven 'maven'
+        maven 'Maven'
     }
 
     stages {
-        stage('Git Pull') {
+        stage('GIT') {
             steps {
                 script {
                     git branch: 'Rahma', url: 'https://github.com/chaimabondka/achatproject'
                 }
             }
         }
-        stage('Maven Install') {
+         stage ('MAVEN BUILD') {
             steps {
-                script {
-                    sh "cd achatproject; mvn clean install"
-                }
+                sh 'mvn clean';
+                sh 'mvn compile';
             }
         }
-        stage('Test') {
+        stage('MAVEN TEST') {
             steps {
-                script {
-                    sh "cd achatproject; mvn clean test"
-                }
+                sh 'mvn test';
             }
         }
 
