@@ -21,5 +21,10 @@ pipeline {
                 sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar';
             }    
         }
+         stage('mvn_test') {
+            steps {
+                sh 'mvn test'
+            }
+        }
     }
 }
