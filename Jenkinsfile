@@ -7,7 +7,7 @@ pipeline {
         stage ('GIT') {
             steps {
                 git branch: 'main',
-                url : 'https://github.com/shinobi010/validationDevops.git'
+                url : 'https://github.com/chaimabondka/achatproject.git'
             }
         }
         stage ('MAVEN BUILD') {
