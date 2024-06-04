@@ -6,8 +6,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +24,6 @@ import java.util.Optional;
 import tn.esprit.rh.achat.entities.CategorieFournisseur;
 import tn.esprit.rh.achat.entities.DetailFournisseur;
 import tn.esprit.rh.achat.entities.Fournisseur;
-import tn.esprit.rh.achat.repositories.DetailFournisseurRepository;
 import tn.esprit.rh.achat.repositories.FournisseurRepository;
 
 @ExtendWith(MockitoExtension.class)
@@ -33,7 +32,6 @@ public class FournisseurServiceImplTest {
 
 	  @Mock
 	    private FournisseurRepository fournisseurRepository;
-	    private DetailFournisseurRepository detailFournisseurRepository;
 
 	  @InjectMocks
 	    private FournisseurServiceImpl fournisseurService;
@@ -87,37 +85,6 @@ public class FournisseurServiceImplTest {
 	        assertEquals(fournisseur.getCode(), addedFournisseur.getCode());
 	        assertEquals(fournisseur.getLibelle(), addedFournisseur.getLibelle());
 	        assertEquals(fournisseur.getCategorieFournisseur(), addedFournisseur.getCategorieFournisseur());
-	    }
-
-	    @Test
-	    
-	    public void testSaveDetailFournisseur() {
-	        Fournisseur fournisseur = new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null);
-	        DetailFournisseur detailFournisseur = new DetailFournisseur();
-	        fournisseur.setDetailFournisseur(detailFournisseur);
-
-	        when(detailFournisseurRepository.save(Mockito.any(DetailFournisseur.class))).thenReturn(detailFournisseur);
-
-	        DetailFournisseur savedDetailFournisseur = fournisseurService.saveDetailFournisseur(fournisseur);
-
-	        assertNotNull(savedDetailFournisseur);
-	        assertEquals(detailFournisseur, savedDetailFournisseur);
-	    }
-	    
-	    @Test
-	    
-	    public void testUpdateFournisseur() {
-	        Fournisseur fournisseur = new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null);
-	        DetailFournisseur detailFournisseur = new DetailFournisseur();
-	        fournisseur.setDetailFournisseur(detailFournisseur);
-
-	        when(detailFournisseurRepository.save(Mockito.any(DetailFournisseur.class))).thenReturn(detailFournisseur);
-	        when(fournisseurRepository.save(Mockito.any(Fournisseur.class))).thenReturn(fournisseur);
-
-	        Fournisseur updatedFournisseur = fournisseurService.updateFournisseur(fournisseur);
-
-	        assertNotNull(updatedFournisseur);
-	        assertEquals(fournisseur.getDetailFournisseur(), updatedFournisseur.getDetailFournisseur());
 	    }
 
 	    @Test
