@@ -1,102 +1,79 @@
-
 package tn.esprit.rh.achat.services;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import tn.esprit.rh.achat.entities.CategorieFournisseur;
+import tn.esprit.rh.achat.entities.DetailFournisseur;
+import tn.esprit.rh.achat.entities.Fournisseur;
+import tn.esprit.rh.achat.repositories.FournisseurRepository;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import tn.esprit.rh.achat.entities.CategorieFournisseur;
-import tn.esprit.rh.achat.entities.DetailFournisseur;
-import tn.esprit.rh.achat.entities.Fournisseur;
-import tn.esprit.rh.achat.repositories.FournisseurRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class FournisseurServiceImplTest {
-	
 
-	  @Mock
-	    private FournisseurRepository fournisseurRepository;
+    @Mock
+    private FournisseurRepository fournisseurRepository;
 
-	  @InjectMocks
-	    private FournisseurServiceImpl fournisseurService;
-	  
-	  @BeforeEach
-	    public void setUp() {
-	        MockitoAnnotations.openMocks(this);
-	    }
-	  
-	  @Test
-	    public void testRetrieveFournisseur() {
-	        Fournisseur fournisseur = new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null);
-	        when(fournisseurRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(fournisseur));
-	        
-	        Fournisseur retrievedFournisseur = fournisseurService.retrieveFournisseur(2L);
-	        
-	        assertNotNull(retrievedFournisseur);
-	        assertEquals(fournisseur.getIdFournisseur(), retrievedFournisseur.getIdFournisseur());
-	        assertEquals(fournisseur.getCode(), retrievedFournisseur.getCode());
-	        assertEquals(fournisseur.getLibelle(), retrievedFournisseur.getLibelle());
-	        assertEquals(fournisseur.getCategorieFournisseur(), retrievedFournisseur.getCategorieFournisseur());
-	    }
+    @InjectMocks
+    private FournisseurServiceImpl fournisseurService;
 
-	    @Test
-	    public void testRetrieveAllFournisseurs() {
-	        List<Fournisseur> fournisseursList = new ArrayList<>();
-	        fournisseursList.add(new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null));
-	        fournisseursList.add(new Fournisseur(2L, "F002", "Fournisseur 2", CategorieFournisseur.CONVENTIONNE, null, null, null));
+    @Test
+    public void testRetrieveFournisseur() {
+  
+        Fournisseur fournisseur = new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null);
+        when(fournisseurRepository.findById(1L)).thenReturn(Optional.of(fournisseur));
+        Fournisseur retrievedFournisseur = fournisseurService.retrieveFournisseur(1L);
+        assertNotNull(retrievedFournisseur);
+        assertEquals(fournisseur, retrievedFournisseur);
+    }
 
-	        when(fournisseurRepository.findAll()).thenReturn(fournisseursList);
+    @Test
+    public void testRetrieveAllFournisseurs() {
+       
+        List<Fournisseur> fournisseursList = new ArrayList<>();
+        fournisseursList.add(new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null));
+        fournisseursList.add(new Fournisseur(2L, "F002", "Fournisseur 2", CategorieFournisseur.CONVENTIONNE, null, null, null));
+        when(fournisseurRepository.findAll()).thenReturn(fournisseursList);
+        List<Fournisseur> resultat = fournisseurService.retrieveAllFournisseurs();
+        assertEquals(fournisseursList, resultat);
+    }
 
-	        List<Fournisseur> resultat = fournisseurService.retrieveAllFournisseurs();
+    @Test
+    public void testAddFournisseur() {
+        
+        Fournisseur fournisseur = new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null);
+        DetailFournisseur detailFournisseur = new DetailFournisseur();
+        detailFournisseur.setDateDebutCollaboration(new Date());
+        fournisseur.setDetailFournisseur(detailFournisseur);
+        when(fournisseurRepository.save(fournisseur)).thenReturn(fournisseur);
+        Fournisseur addedFournisseur = fournisseurService.addFournisseur(fournisseur);
+        assertNotNull(addedFournisseur);
+        assertNotNull(addedFournisseur.getDetailFournisseur());
+        assertEquals(fournisseur.getCode(), addedFournisseur.getCode());
+        assertEquals(fournisseur.getLibelle(), addedFournisseur.getLibelle());
+        assertEquals(fournisseur.getCategorieFournisseur(), addedFournisseur.getCategorieFournisseur());
+    }
 
-	        assertEquals(fournisseursList, resultat);
-	    }
-	    
-	    @Test
-	    
-	    public void testAddFournisseur() {
-	        Fournisseur fournisseur = new Fournisseur(1L, "F001", "Fournisseur 1", CategorieFournisseur.ORDINAIRE, null, null, null);
-	        DetailFournisseur detailFournisseur = new DetailFournisseur();
-	        detailFournisseur.setDateDebutCollaboration(new Date());
-	        fournisseur.setDetailFournisseur(detailFournisseur);
-
-	        when(fournisseurRepository.save(Mockito.any(Fournisseur.class))).thenReturn(fournisseur);
-
-	        Fournisseur addedFournisseur = fournisseurService.addFournisseur(fournisseur);
-
-	        assertNotNull(addedFournisseur);
-	        assertNotNull(addedFournisseur.getDetailFournisseur());
-	        assertEquals(fournisseur.getCode(), addedFournisseur.getCode());
-	        assertEquals(fournisseur.getLibelle(), addedFournisseur.getLibelle());
-	        assertEquals(fournisseur.getCategorieFournisseur(), addedFournisseur.getCategorieFournisseur());
-	    }
-
-	    @Test
-	    
-	    public void testDeleteFournisseur() {
-	        Long fournisseurId = 1L;
-	        
-	        doNothing().when(fournisseurRepository).deleteById(fournisseurId);
-	        
-	        fournisseurService.deleteFournisseur(fournisseurId);
-	        
-	        verify(fournisseurRepository, times(1)).deleteById(fournisseurId);
-	    }
-	
+    @Test
+    public void testDeleteFournisseur() {
+        
+        Long fournisseurId = 1L;
+        doNothing().when(fournisseurRepository).deleteById(fournisseurId);
+        fournisseurService.deleteFournisseur(fournisseurId);
+        verify(fournisseurRepository, times(1)).deleteById(fournisseurId);
+    }
 }
