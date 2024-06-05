@@ -1,24 +1,23 @@
 package tn.esprit.rh.achat.services;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.MockitoAnnotations;
 
 import tn.esprit.rh.achat.entities.Stock;
 import tn.esprit.rh.achat.repositories.StockRepository;
 
-@ExtendWith(MockitoExtension.class)
 public class StockServiceImplTest {
 
     @Mock
@@ -31,64 +30,67 @@ public class StockServiceImplTest {
 
     @BeforeEach
     public void setUp() {
-        stock = new Stock();
-        stock.setIdStock(1L);
-        stock.setLibelleStock("Test Stock");
-        stock.setQte(100);
-        stock.setQteMin(10);
+        MockitoAnnotations.openMocks(this);
+        stock = new Stock(1L, "Test Stock", 100, 10);
     }
 
     @Test
-    public void testSaveStock() {
-        when(stockRepository.save(any(Stock.class))).thenReturn(stock);
+    public void testRetrieveAllStocks() {
+        List<Stock> stocks = Arrays.asList(stock);
+        when(stockRepository.findAll()).thenReturn(stocks);
 
-        Stock savedStock = stockService.saveStock(stock);
-
-        assertNotNull(savedStock);
-        assertEquals("Test Stock", savedStock.getLibelleStock());
-        verify(stockRepository, times(1)).save(stock);
+        List<Stock> result = stockService.retrieveAllStocks();
+        assertNotNull(result);
+        assertEquals(1, result.size());
+        assertEquals(stock.getLibelleStock(), result.get(0).getLibelleStock());
     }
 
     @Test
-    public void testUpdateStock() {
+    public void testAddStock() {
         when(stockRepository.save(any(Stock.class))).thenReturn(stock);
-
-        Stock updatedStock = stockService.updateStock(stock);
-
-        assertNotNull(updatedStock);
-        assertEquals("Test Stock", updatedStock.getLibelleStock());
+        Stock createdStock = stockService.addStock(stock);
+        assertNotNull(createdStock);
+        assertEquals(stock.getLibelleStock(), createdStock.getLibelleStock());
         verify(stockRepository, times(1)).save(stock);
     }
 
     @Test
     public void testDeleteStock() {
         doNothing().when(stockRepository).deleteById(anyLong());
-
         stockService.deleteStock(1L);
-
         verify(stockRepository, times(1)).deleteById(1L);
     }
 
     @Test
-    public void testGetStockById() {
+    public void testUpdateStock() {
+        when(stockRepository.save(any(Stock.class))).thenReturn(stock);
+        Stock updatedStock = stockService.updateStock(stock);
+        assertNotNull(updatedStock);
+        assertEquals(stock.getLibelleStock(), updatedStock.getLibelleStock());
+        verify(stockRepository, times(1)).save(stock);
+    }
+
+    @Test
+    public void testRetrieveStock() {
         when(stockRepository.findById(anyLong())).thenReturn(Optional.of(stock));
-
-        Stock foundStock = stockService.getStockById(1L);
-
+        Stock foundStock = stockService.retrieveStock(1L);
         assertNotNull(foundStock);
-        assertEquals("Test Stock", foundStock.getLibelleStock());
+        assertEquals(stock.getLibelleStock(), foundStock.getLibelleStock());
         verify(stockRepository, times(1)).findById(1L);
     }
 
     @Test
-    public void testGetAllStocks() {
-        List<Stock> stocks = Arrays.asList(stock);
-        when(stockRepository.findAll()).thenReturn(stocks);
+    public void testRetrieveStatusStock() {
+        List<Stock> stocksEnRouge = Arrays.asList(stock);
+        when(stockRepository.retrieveStatusStock()).thenReturn(stocksEnRouge);
 
-        List<Stock> foundStocks = stockService.getAllStocks();
+        String status = stockService.retrieveStatusStock();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+        String now = sdf.format(new Date());
+        String expectedMessage = System.lineSeparator() + now + System.lineSeparator()
+                + ": le stock Test Stock a une quantité de 100 inférieur à la quantité minimale a ne pas dépasser de 10"
+                + System.lineSeparator();
 
-        assertNotNull(foundStocks);
-        assertEquals(1, foundStocks.size());
-        verify(stockRepository, times(1)).findAll();
+        assertTrue(status.contains(expectedMessage));
     }
 }
