@@ -18,10 +18,12 @@ pipeline {
         }
         
         stage('MAVEN BUILD') {
+            steps {
                 script {
                     env.JAVA_HOME = tool name: 'jdk17', type: 'jdk'
                     sh 'mvn clean compile'
                 }
+            }
         }
         
         stage('MAVEN TEST') {
