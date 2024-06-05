@@ -19,8 +19,7 @@ pipeline {
         
         stage('MAVEN BUILD') {
                 script {
-                    // Ensuring Maven uses JDK 11
-                    env.JAVA_HOME = tool name: 'jdk11', type: 'jdk'
+                    env.JAVA_HOME = tool name: 'jdk17', type: 'jdk'
                     sh 'mvn clean compile'
                 }
         }
