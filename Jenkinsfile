@@ -2,6 +2,7 @@ pipeline {
     agent {
         label 'jenkins-agent'
     }
+
     tools {
         maven 'Maven'
     }
@@ -14,17 +15,25 @@ pipeline {
                 }
             }
         }
-         stage ('MAVEN BUILD') {
+        
+        stage('MAVEN BUILD') {
             steps {
-                sh 'mvn clean';
-                sh 'mvn compile';
+                sh 'mvn clean compile'
             }
         }
+        
         stage('MAVEN TEST') {
             steps {
-                sh 'mvn test';
+                sh 'mvn test'
             }
         }
-
-}
+        
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+    }
 }
