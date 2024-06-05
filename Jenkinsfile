@@ -17,7 +17,7 @@ pipeline {
         }
         stage ('MAVEN SONARQUBE') {
             steps { 
-                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1';
+                sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=admin1'
             }    
         }
         stage('TEST') {
@@ -28,6 +28,7 @@ pipeline {
         stage ('NEXUS') {
             steps {
                 sh 'mvn deploy -DskipTests' 
+            }
         }
     }
 }
