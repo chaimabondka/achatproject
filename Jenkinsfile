@@ -30,5 +30,10 @@ pipeline {
                 sh 'mvn deploy -DskipTests' 
             }
         }
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t mariemabd19/achatprojet:1.0.0 .'
+            }
+        }
     }
 }
