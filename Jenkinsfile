@@ -35,5 +35,14 @@ pipeline {
                 sh 'docker build -t mariemabd19/achatprojet:1.0.0 .'
             }
         }
+        stages {
+        // Previous stages...
+        
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                sh 'docker login -u mariemabd19 -p "Abdelmoula0612++"'
+                sh 'docker push mariemabd19/achatprojet:1.0.0'
+            }
+        }
     }
 }
