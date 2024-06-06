@@ -28,7 +28,7 @@ pipeline {
         }
          stage('mvn_deploy') {
             steps {
-                sh 'mvn deploy'
+                sh 'mvn deploy -X'
             }
         }
     }
