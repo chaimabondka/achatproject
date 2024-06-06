@@ -10,10 +10,11 @@ pipeline {
     environment {
         APP_NAME = "achatproject"
         RELEASE = "1.0.0"
-        DOCKER_USER = "docker"
-        DOCKER_PASS = "docker"
-        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
-        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+        registry = "rahmakhamassi/achatproject"
+        registryCredential = 'dockerhub'
+        dockerImage = ''
+        DOCKER_CREDENTIALS_ID = "docker"
+
     }
 
     stages {
@@ -51,9 +52,9 @@ pipeline {
         stage('DOCKER BUILD & PUSH') {
             steps {
                 script {
-                    docker.withRegistry('', DOCKER_USER) {
-                        dockerImage = docker.build("${IMAGE_NAME}")
-                        dockerImage.push("${IMAGE_TAG}")
+                    docker.withRegistry('',DOCKER_CREDENTIALS_ID) {
+                        dockerImage = docker.build("${registry}:$BUILD_NUMBER")
+                        dockerImage.push()
                     }
                 }
             }
