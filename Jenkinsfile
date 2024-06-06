@@ -52,13 +52,11 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
-                        dockerImage = docker.build("${registry}:$BUILD_NUMBER")
-                        dockerImage.push()
-                    }
-
+                        sh 'docker build -t rahmakhamassi/achatproject:${RELEASE} .'       
+                        sh 'docker push rahmakhamassi/achatproject:${RELEASE}'
                     }
                 }
             }
         }
-    
+    }
 }
