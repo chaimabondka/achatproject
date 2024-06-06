@@ -17,13 +17,6 @@
 		<java.version>1.8</java.version>
 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
-	<distributionManagement>
-      <repository>
-       <id>deploymentRepo</id>
-       <name>Nexus Repository</name>
-       <url>http://169.254.230.2:8081/repository/maven-releases/</url>
-      </repository>
-    </distributionManagement>
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,7 +85,6 @@
 			</plugin>
 		</plugins>
 	</build>
-<<<<<<< HEAD
 	<distributionManagement>
 		<repository>
 			<id>deploymentRepo</id>
@@ -100,7 +92,4 @@
 			<url>http://localhost:8081/repository/maven-releases/</url>
 		</repository>
 	</distributionManagement>
-
-=======
->>>>>>> 168c9b39311ccd0084bd85f0a0630f57d83cec9a
 </project>
