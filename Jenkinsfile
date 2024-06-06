@@ -56,7 +56,9 @@ pipeline {
         }
          stage('Build Docker Image') {
             steps {
+                dir('Dockerfile'){
                 sh 'docker build -t molkaadmin/achatprojet:1.0.0 .'
+                }   
             }
         }
     }
