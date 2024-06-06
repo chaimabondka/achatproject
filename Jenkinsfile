@@ -50,7 +50,6 @@ pipeline {
         }
         stage ('NEXUS') {
             steps {
-                 git branch: 'molkaa',
                 sh 'mvn deploy -DaltDeploymentRepository=nexus-releases::default::http://10.6.252.45:8081/repository'
             }
         }
