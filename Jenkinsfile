@@ -30,15 +30,6 @@ pipeline {
             }
         }
         
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
-                        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar'
-                        sh 'mvn sonar:sonar'
-                    }
-                }
-            }
-        }
+
     }
 }
