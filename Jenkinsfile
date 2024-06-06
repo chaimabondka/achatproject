@@ -25,7 +25,7 @@ pipeline {
         }
         stage ('GIT') {
             steps {
-                git branch: 'master',
+                git branch: 'molkaa',
                 url : 'https://github.com/chaimabondka/achatproject.git'
             }
         }
