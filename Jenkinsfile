@@ -6,6 +6,15 @@ pipeline {
     tools {
         maven 'Maven'
     }
+    
+    environment {
+        APP_NAME = "achatproject"
+        RELEASE = "1.0.0"
+        DOCKER_USER = "rahmakhamassi"
+        DOCKER_PASS = "docker"
+        IMAGE_NAME = "${DOCKER_USER}/${APP_NAME}"
+        IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
+    }
 
     stages {
         stage('GIT') {
@@ -18,9 +27,7 @@ pipeline {
         
         stage('MAVEN BUILD') {
             steps {
-                script {
-                    sh 'mvn clean compile'
-                }
+                sh 'mvn clean compile'
             }
         }
         
@@ -29,7 +36,25 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        
 
+        stage('Maven Deploy') {
+            steps {
+                script {
+                    sh 'mvn deploy -DskipTests'
+                }
+            }
+        }
+
+
+        stage('DOCKER BUILD & PUSH') {
+            steps {
+                script {
+                    docker.withRegistry('', DOCKER_USER) {
+                        dockerImage = docker.build("${IMAGE_NAME}")
+                        dockerImage.push("${IMAGE_TAG}")
+                    }
+                }
+            }
+        }
     }
 }
