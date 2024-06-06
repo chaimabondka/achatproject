@@ -40,10 +40,11 @@ pipeline {
         stage('Maven Deploy') {
             steps {
                 script {
-                configFileProvider([configFile(fileId: '7e7b9889-1a9d-40b3-b6d9-e604d1852060', variable: 'MAVEN_SETTINGS')]) {
-                    sh 'mvn clean install --settings $MAVEN_SETTINGS'
-                }
+                    configFileProvider([configFile(fileId: '7e7b9889-1a9d-40b3-b6d9-e604d1852060', variable: 'MAVEN_SETTINGS')]) {
+                        sh 'mvn clean install --settings $MAVEN_SETTINGS'
+                    }
             }
+        }
         }
 
 
