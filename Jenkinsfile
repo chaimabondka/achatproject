@@ -4,9 +4,7 @@ pipeline {
     }
 
     tools {
-        jdk   'jdk17'
         maven 'Maven'
-
     }
 
     stages {
@@ -21,7 +19,6 @@ pipeline {
         stage('MAVEN BUILD') {
             steps {
                 script {
-                    sh 'mvn clean package'
                     sh 'mvn clean compile'
                 }
             }
