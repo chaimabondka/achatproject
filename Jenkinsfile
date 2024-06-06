@@ -54,6 +54,11 @@ pipeline {
                 sh 'mvn deploy -DaltDeploymentRepository=nexus-releases::default::http://10.6.252.45:8081/repository/maven-releases/'
             }
         }
+         stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t molkaadmin/achatprojet:1.0.0 .'
+            }
+        }
     }
 
     }
