@@ -15,7 +15,6 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImage = ''
         DOCKER_CREDENTIALS_ID = "docker"
-
     }
 
     stages {
@@ -45,16 +44,15 @@ pipeline {
                     configFileProvider([configFile(fileId: '7e7b9889-1a9d-40b3-b6d9-e604d1852060', variable: 'MAVEN_SETTINGS')]) {
                         sh 'mvn clean install --settings $MAVEN_SETTINGS'
                     }
+                }
             }
         }
-        }
-
 
         stage('DOCKER BUILD & PUSH') {
             steps {
                 script {
-                    docker.withRegistry('',DOCKER_CREDENTIALS_ID) {
-                        dockerImage = docker.build("${registry}:$BUILD_NUMBER")
+                    docker.withRegistry('', env.DOCKER_CREDENTIALS_ID) {
+                        dockerImage = docker.build("${env.registry}:${env.BUILD_NUMBER}")
                         dockerImage.push()
                     }
                 }
