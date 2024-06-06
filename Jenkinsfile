@@ -5,7 +5,7 @@ pipeline {
 
     tools {
         maven 'Maven'
-        dockerTool 'docker'
+        docker 'docker'
     }
     
     environment {
@@ -51,9 +51,11 @@ pipeline {
         stage('DOCKER BUILD & PUSH') {
             steps {
                 script {
-                    docker.withRegistry('', env.DOCKER_CREDENTIALS_ID) {
-                        dockerImage = docker.build("${env.registry}:${env.BUILD_NUMBER}")
+                    docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
+                        dockerImage = docker.build("${registry}:$BUILD_NUMBER")
                         dockerImage.push()
+                    }
+
                     }
                 }
             }
