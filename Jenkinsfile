@@ -50,7 +50,7 @@ pipeline {
         }
         stage ('NEXUS') {
             steps {
-                sh 'mvn deploy -DskipTests -DaltDeploymentRepository=nexus::default::http://10.6.252.45:8081/repository/maven-releases/ -X -e'     //skip test pour gagner le temps, optimiser les ressources et éviter la redondance
+                sh 'mvn deploy -DskipTests'     //skip test pour gagner le temps, optimiser les ressources et éviter la redondance
             }
         }
     }
