@@ -28,7 +28,7 @@ pipeline {
         }
          stage('mvn_deploy') {
             steps {
-                sh 'mvn deploy -X'
+             sh "mvn deploy -DaltDeploymentRepository=releases::default::http://169.254.230.2:8081/repository/maven-releases/"
             }
         }
     }
