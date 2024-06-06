@@ -25,7 +25,7 @@ pipeline {
         }
         stage ('GIT') {
             steps {
-                git branch: 'molkaa',
+                git branch: 'master',
                 url : 'https://github.com/chaimabondka/achatproject.git'
             }
         }
@@ -50,6 +50,7 @@ pipeline {
         }
         stage ('NEXUS') {
             steps {
+                 git branch: 'molkaa',
                 sh 'mvn deploy -DaltDeploymentRepository=nexus-releases::default::http://10.6.252.45:8081/repository'
             }
         }
