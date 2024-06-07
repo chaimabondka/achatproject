@@ -40,7 +40,7 @@ pipeline {
         stage('BUILD DOCKER IMAGE') {
             steps {
                  script {
-                   sh 'docker build -t  aymen10/achat-devops:1.0.0 .'
+                   sh 'docker build -t  aymen80/achat-devops:1.0.0 .'
                 }
             }
         }
