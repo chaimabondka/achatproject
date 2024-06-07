@@ -39,6 +39,11 @@ pipeline {
          }
         }
         stage('DOCKER PUSH'){
+            environment {
+                DOCKER_CREDENTIALS = 'e964a3fc-83b0-475c-952d-697048b765cc'
+                IMAGE_NAME = 'chaima12/achat-devops'
+                IMAGE_TAG = '1.0.0'
+            }
             steps{
                 sh '''docker login -u chaimabondka123 -p Dockerhub
                 docker push chaima12/achat-devops:1.0.0''';
