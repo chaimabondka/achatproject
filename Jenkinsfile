@@ -50,7 +50,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t rahmakhamassi/achatproject .'
+                sh 'docker build -t rahmakhamassi/achatproject:1.0.0 .'
             }
         }
         stage('Push Docker Image to DockerHub') {
