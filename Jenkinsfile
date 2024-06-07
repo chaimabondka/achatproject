@@ -36,21 +36,5 @@ pipeline {
              sh 'docker build -t chaima12/achat-devops:1.0.0 . -f Dockerfile'
             }
         }
-        stage('DOCKER PUSH'){
-            steps {
-             sh '''docker login -u chaimabondka123 -p Dockerhub
-                   docker push chaima12/achat-devops:1.0.0''';
-            }
-        }
-        stage('docker_compose'){
-            steps {
-             sh 'docker compose up -d'
-            }
-        }
-        stage('Check Workspace') {
-           steps {
-            sh 'ls -la' // Vérifiez le contenu du répertoire de travail Jenkins
-    }
-}
     }
 }
