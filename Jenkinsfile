@@ -69,7 +69,9 @@ pipeline {
         }   
          stage('Run Docker Compose') {
             steps {
+                dir('/var/lib/jenkins/workspace/Molka_2ALINFO5/achatproject/'){
                 sh 'docker compose up -d'
+                }
             }
         }
     }
