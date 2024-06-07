@@ -31,19 +31,10 @@ pipeline {
              sh "mvn deploy -DaltDeploymentRepository=releases::default::http://169.254.230.2:8081/repository/maven-releases/"
             }
         }
-       stage('DOCKER BUILD') {
+        stage('DOCKER BUILD') {
             steps {
-                script {
-                    // Chemin complet vers votre Dockerfile
-                    def dockerfilePath = "C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile"
-                    
-                    // Nom et tag de votre image Docker
-                    def dockerImageTag = "chaima12/achat-devops:1.0.0"
-                    
-                    // Commande Docker build
-                    sh "docker build -t ${dockerImageTag} -f ${dockerfilePath} ."
-                }
-           }
+             sh 'docker build -t chaima12/achat-devops:1.0.0 . -f Dockerfile'
+            }
         }
     }
 }
