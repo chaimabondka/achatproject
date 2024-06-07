@@ -33,7 +33,11 @@ pipeline {
         }
         stage('DOCKER BUILD') {
             steps {
-             sh 'docker build -t chaima12/achat-devops:1.0.0 .'
+              dir('C:\Users\bondk\OneDrive\Bureau\2Alinfo5\devops\achat') {
+                    script {
+                        docker.build('chaima12/achat-devops:1.0.0')
+                    }
+                }
             }
         }
     }
