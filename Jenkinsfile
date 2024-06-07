@@ -34,14 +34,14 @@ pipeline {
        stage('DOCKER BUILD') {
             steps {
                 script {
-                    // Chemin complet vers votre Dockerfile
+                    // Chemin complet vers votre Dockerfile avec des guillemets doubles
                     def dockerfilePath = "C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile"
                     
                     // Nom et tag de votre image Docker
                     def dockerImageTag = "chaima12/achat-devops:1.0.0"
                     
                     // Commande Docker build
-                    sh "docker build -t ${dockerImageTag} -f ${dockerfilePath} ."
+                    sh "docker build -t ${dockerImageTag} -f \"${dockerfilePath}\" ."
                 }
            }
         }
