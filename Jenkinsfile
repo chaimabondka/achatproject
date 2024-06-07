@@ -50,6 +50,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
+                sh 'docker login -u rahmakhamassi/achatproject -p "jenkins2024/"'
                 sh 'docker build -t rahmakhamassi/achatproject:1.0.0 .'
             }
         }
