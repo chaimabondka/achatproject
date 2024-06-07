@@ -46,7 +46,7 @@ pipeline {
         stage('DOCKER BUILD') {
             steps { 
                  script {
-                   sh 'docker build -t molkaadmin/achatprojet:1.0.0 .'
+                   sh 'docker build -t  chaima12/achat-devops:1.0.0 .'
                 }
             }
         }
