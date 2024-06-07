@@ -50,5 +50,13 @@ pipeline {
                 }
             }
         }
+        stage('Debug') {
+    steps {
+        // Imprimer le répertoire de travail de Jenkins
+        sh 'pwd'
+        // Lister les fichiers dans le répertoire
+        sh 'ls -la'
+    }
+}
     }
 }
