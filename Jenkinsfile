@@ -33,13 +33,17 @@ pipeline {
         }
        stage('DOCKER BUILD') {
             steps {
-               script {
-                    // Chemin du Dockerfile avec échappement
-                    def dockerfilePath = 'C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile'
+                script {
+                    // Chemin complet vers votre Dockerfile
+                    def dockerfilePath = "C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile"
                     
-                    // Commande Docker build avec le chemin du Dockerfile spécifié
-                    sh "docker build -t chaima12/achat-devops:1.0.0 -f ${dockerfilePath} ."
+                    // Nom et tag de votre image Docker
+                    def dockerImageTag = "chaima12/achat-devops:1.0.0"
+                    
+                    // Commande Docker build
+                    sh "docker build -t ${dockerImageTag} -f ${dockerfilePath} ."
                 }
+           }
         }
     }
 }
