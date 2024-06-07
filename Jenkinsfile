@@ -32,13 +32,11 @@ pipeline {
             }
         }
         stage('DOCKER BUILD'){
-            steps {
-                 script {
-                    // Vérifiez si le fichier Dockerfile existe dans le répertoire achat
-                    sh 'ls -la 2Alinfo5/devops/achat'
-                    sh 'cat 2Alinfo5/devops/achat/Dockerfile'
+           steps {
+                dir('2Alinfo5/devops/achat') {
+                    sh 'ls -la'
+                    sh 'docker build -t chaima12/achat-devops:1.0.0 .'
                 }
-             sh 'docker build -t chaima12/achat-devops:1.0.0 .';
             }
         }
         stage('DOCKER PUSH'){
