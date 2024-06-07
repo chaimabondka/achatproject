@@ -46,7 +46,13 @@ pipeline {
         
         stage('DOCKER BUILD') {
             steps {
-                sh 'docker build -t chaima12/achat-devops:1.0.0 .'
+             script {
+                    // Spécifiez le chemin du Dockerfile
+                    def dockerfilePath = "C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile"
+                    
+                    // Construire l'image Docker
+                    docker.build("chaima12/achat-devops:1.0.0", "-f ${dockerfilePath} .")
+                }
             }
         }
     }
