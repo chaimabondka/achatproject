@@ -35,7 +35,7 @@ pipeline {
             steps {
                script {
                   // Chemin du Dockerfile avec échappement des caractères spéciaux
-                    def dockerfilePath = 'C:\\Users\\bondk\\OneDrive\\Bureau\\2Alinfo5\\devops\\achat\\Dockerfile'
+                     def dockerfilePath = 'C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile'
                     
                     // Commande Docker build avec le chemin du Dockerfile spécifié
                     sh "docker build -t chaima12/achat-devops:1.0.0 . -f ${dockerfilePath}"
