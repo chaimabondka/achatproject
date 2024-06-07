@@ -1,12 +1,15 @@
 pipeline {
     agent any
-    tools  {
-        maven 'M2_HOME'
-       }
+
+    environment {
+        SONAR_HOST_URL = 'http://192.168.50.2:9000'
+        DOCKER_HUB_REPO = 'ahmedfourati54/achatimage:achatimage'
+    }
+
     stages {
         stage('get_code') {
             steps {
-                echo 'pulling'
+                echo 'Pulling code'
                 git branch: 'ahmed', url: 'https://github.com/chaimabondka/achatproject'
             }
         }
@@ -24,11 +27,11 @@ pipeline {
         }
         stage('SonarQube analysis') {
             steps {
-                script {
+                withCredentials([usernamePassword(credentialsId: 'sonar-login', usernameVariable: 'SONAR_USER', passwordVariable: 'SONAR_PASSWORD')]) {
                     sh 'mvn sonar:sonar \
-                        -Dsonar.host.url=http://192.168.50.2:9000 \
-                        -Dsonar.login=admin \
-                        -Dsonar.password=sonar'
+                        -Dsonar.host.url=${SONAR_HOST_URL} \
+                        -Dsonar.login=${SONAR_USER} \
+                        -Dsonar.password=${SONAR_PASSWORD}'
                 }
             }
         }
@@ -38,11 +41,11 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage ('NEXUS') {
+        stage('NEXUS') {
             steps {
                 sh 'mvn deploy'
             }
-    }
+        }
         stage('Build Docker Image') {
             steps {
                 echo 'Building Docker image'
@@ -50,23 +53,24 @@ pipeline {
                 echo "Docker image achatimage:latest built successfully"
             }
         }
-        stage ('DOCKER HUB') {
-           steps {
-               sh 'docker login -u ahmedfourati54 -p fouratiahmed54'
-               sh 'docker tag achatimage:latest ahmedfourati54/achatimage:achatimage'
-               sh 'docker push ahmedfourati54/achatimage:achatimage'
-           }
-        }
-         stage ('Run Docker-Compose') {
+        stage('DOCKER HUB') {
             steps {
-               sh 'docker compose up -d'
+                withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'DOCKER_HUB_USERNAME', passwordVariable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh "docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker tag achatimage:latest ${DOCKER_HUB_REPO}"
+                    sh "docker push ${DOCKER_HUB_REPO}"
+                }
             }
         }
-         stage ('GRAFANA') {
+        stage('Run Docker-Compose') {
             steps {
-               echo 'GRAFANA'
+                sh 'docker compose up -d'
             }
         }
-
-  }
+        stage('GRAFANA') {
+            steps {
+                echo 'GRAFANA'
+            }
+        }
+    }
 }
