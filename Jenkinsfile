@@ -50,5 +50,22 @@ pipeline {
                 }
             }
         }
+        stage('Push Docker Image to DockerHub'){
+            steps {
+                sh '''docker login -u  -p docker292001
+                      docker push molkaadmin/achatprojet:1.0.0'''
+            }
+        }   
+        stage('DOCKER PUSH'){
+            steps {
+             sh '''docker login -u chaimabondka123 -p Dockerhub
+                   docker push chaima12/achat-devops:1.0.0''';
+            }
+        }
+        stage('docker_compose'){
+            steps {
+             sh 'docker compose up -d'
+            }
+        }
     }
 }
