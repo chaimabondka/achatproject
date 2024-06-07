@@ -33,10 +33,7 @@ pipeline {
         }
        stage('DOCKER BUILD') {
             steps {
-              dir('/var/lib/jenkins/workspace/chaima_2Alinfo5/.git'){
-                sh 'docker build -t  chaima12/achat-devops:1.0.0 .'
-                }
-
+              sh 'docker build -t chaima12/achat-devops:1.0.0 . -f Dockerfile'
             }
         }
     }
