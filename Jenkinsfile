@@ -33,10 +33,17 @@ pipeline {
         }
        stage('DOCKER BUILD') {
             steps {
-              dir('/var/lib/jenkins/workspace/chaima_2Alinfo5/2Alinfo5/devops/achat') { 
+              dir('/2Alinfo5/devops/achat') { 
               sh 'docker build -t chaima12/achat-devops:1.0.0 .'
            }
          }
         }
+        stage('DOCKER PUSH'){
+            steps{
+                sh '''docker login -u chaimabondka123 -p Dockerhub
+                docker push chaima12/achat-devops:1.0.0''';
+            }
+        }
+
     }
 }
