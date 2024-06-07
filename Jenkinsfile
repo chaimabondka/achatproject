@@ -31,9 +31,9 @@ pipeline {
              sh "mvn deploy -DaltDeploymentRepository=releases::default::http://169.254.230.2:8081/repository/maven-releases/"
             }
         }
-        stage('DOCKER BUILD') {
+       stage('DOCKER BUILD') {
             steps {
-              dir('C:\Users\bondk\OneDrive\Bureau\2Alinfo5\devops\achat') {
+                dir('C:\\Users\\bondk\\OneDrive\\Bureau\\2Alinfo5\\devops\\achat') {
                     script {
                         docker.build('chaima12/achat-devops:1.0.0')
                     }
