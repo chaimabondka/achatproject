@@ -33,7 +33,7 @@ pipeline {
         }
         stage('DOCKER BUILD'){
             steps {
-                    sh 'docker build -t chaima12/achat-devops:1.0.0 .'
+             sh 'docker build -t chaima12/achat-devops:1.0.0 .';
             }
         }
         stage('DOCKER PUSH'){
@@ -47,5 +47,10 @@ pipeline {
              sh 'docker compose up -d'
             }
         }
+        stage('Check Workspace') {
+           steps {
+            sh 'ls -la' // Vérifiez le contenu du répertoire de travail Jenkins
+    }
+}
     }
 }
