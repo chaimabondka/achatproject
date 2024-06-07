@@ -34,7 +34,7 @@ pipeline {
        stage('DOCKER BUILD') {
             steps {
                script {
-                    // Spécifiez le chemin complet vers le Dockerfile
+                    // Spécifiez le chemin complet vers le Dockerfile avec les bonnes barres obliques inverses
                     def dockerfilePath = "C:\\Users\\bondk\\OneDrive\\Bureau\\2Alinfo5\\devops\\achat\\Dockerfile"
                     
                     // Construire l'image Docker en spécifiant le chemin complet du Dockerfile
