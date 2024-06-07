@@ -47,7 +47,7 @@ pipeline {
         stage('Push Docker Image to DockerHub') {
             steps {
                 sh 'docker login -u aymen80 -p "Hello123*+-"'
-                sh 'docker push aymen10/achatprojet:1.0.0'
+                sh 'docker push aymen10/achat-devops:1.0.0'
             }
         }
         stage('RUN DOCKER COMPOSE') {
