@@ -33,8 +33,6 @@ pipeline {
         }
         stage('DOCKER BUILD'){
             steps {
-             sh 'ls -la'  // Pour vérifier que le Dockerfile est présent dans le répertoire courant
-             sh 'cat Dockerfile'  // Pour vérifier le contenu du Dockerfile
              sh 'docker build -t chaima12/achat-devops:1.0.0 .';
             }
         }
