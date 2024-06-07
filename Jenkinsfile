@@ -46,17 +46,9 @@ pipeline {
         stage('DOCKER BUILD') {
             steps { 
                  script {
-                   docker.build("chaima12/achat-devops:1.0.0")
+                   sh 'docker build -t molkaadmin/achatprojet:1.0.0 .'
                 }
             }
         }
-        stage('Debug') {
-    steps {
-        // Imprimer le répertoire de travail de Jenkins
-        sh 'pwd'
-        // Lister les fichiers dans le répertoire
-        sh 'ls -la'
-    }
-}
     }
 }
