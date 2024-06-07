@@ -46,7 +46,7 @@ pipeline {
         stage('DOCKER BUILD') {
             steps { 
                  script {
-                 docker.build("chaima12/achat-devops:1.0.0", ".")
+                   docker.build("chaima12/achat-devops:1.0.0")
                 }
             }
         }
