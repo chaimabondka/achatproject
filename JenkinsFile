@@ -1,0 +1,60 @@
+pipeline {
+   agent any
+    tools  {
+        maven 'M2_HOME'
+    }
+    stages{
+        stage('Checkout GIT') {
+            steps {
+                echo 'Pulling...';
+                git branch: 'Aymen',
+                url: 'https://github.com/chaimabondka/achatproject.git';
+
+            }
+        }
+       stage ('MVN CLEAN') {
+            steps {
+                sh 'mvn clean';
+            }
+        }
+        stage ('MVN COMPILE') {
+            steps {
+                sh 'mvn compile';
+            }
+        }
+        stage('MVN SONARQUBE') {
+            steps {
+                sh "mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=sonar"
+            }
+        }
+        stage('MVN TEST') {
+            steps {
+                sh "mvn test"
+            }
+        }
+        stage('MVN DEPLOY') {
+            steps {
+                sh "mvn deploy"
+            }
+        }
+        stage('BUILD DOCKER IMAGE') {
+            steps {
+                 script {
+                   sh 'docker build -t  aymen10/achat-devops:1.0.0 .'
+                }
+            }
+        }
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                sh 'docker login -u Aymen80 -p "Hello123*+-"'
+                sh 'docker push aymen10/achatprojet:1.0.0'
+            }
+        }
+        stage('RUN DOCKER COMPOSE') {
+            steps {
+                sh 'docker compose up -d'
+            }
+    }
+
+    }
+}
