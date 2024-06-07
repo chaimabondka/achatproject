@@ -34,12 +34,12 @@ pipeline {
        stage('DOCKER BUILD') {
             steps {
                script {
-                   // Chemin du Dockerfile avec échappement
+                    // Chemin du Dockerfile avec échappement
                     def dockerfilePath = 'C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile'
                     
                     // Commande Docker build avec le chemin du Dockerfile spécifié
-                    sh "docker build -t chaima12/achat-devops:1.0.0 . -f ${dockerfilePath}"
-            }
+                    sh "docker build -t chaima12/achat-devops:1.0.0 -f ${dockerfilePath} ."
+                }
         }
     }
 }
