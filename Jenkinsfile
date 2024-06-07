@@ -48,14 +48,15 @@ pipeline {
             }
         }
 
-        stage('DOCKER BUILD & PUSH') {
+        stage('Build Docker Image') {
             steps {
-                script {
-                    docker.withRegistry('', DOCKER_CREDENTIALS_ID) {
-                        sh 'docker build -t rahmakhamassi/achatproject:${RELEASE} .'       
-                        sh 'docker push rahmakhamassi/achatproject:${RELEASE}'
-                    }
-                }
+                sh 'docker build -t rahmakhamassi/achatproject .'
+            }
+        }
+        stage('Push Docker Image to DockerHub') {
+            steps {
+                sh 'docker login -u rahmakhamassi/achatproject -p "jenkins2024/"'
+                sh 'docker push rahmakhamassi/achatproject:1.0.0'
             }
         }
     }
