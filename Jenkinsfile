@@ -66,7 +66,12 @@ pipeline {
                 sh '''docker login -u molkaadmin -p docker292001
                       docker push molkaadmin/achatprojet:1.0.0'''
             }
-        }    
+        }   
+         stage('Run Docker Compose') {
+            steps {
+                sh 'docker compose up -d'
+            }
+        }
     }
 
     }
