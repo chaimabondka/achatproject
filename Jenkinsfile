@@ -45,13 +45,13 @@ pipeline {
         
         stage('DOCKER BUILD') {
             steps { 
-                   sh 'docker build -t  chaima12/achat-devops:1.0.0 .'
+                   sh 'docker build -t  chaimabondka123/achat-devops:1.0.0 .'
             }
         }
         stage('DOCKER PUSH'){
             steps {
              sh '''docker login -u chaimabondka123 -p Dockerhub
-                   docker push chaima12/achat-devops:1.0.0''';
+                   docker push chaimabondka123/achat-devops:1.0.0''';
             }
         }
         stage('docker_compose'){
