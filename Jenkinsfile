@@ -9,7 +9,7 @@ pipeline {
         stage('GIT') {
             steps {
                 // Récupération du code depuis GitHub
-                git branch: 'main',
+                git branch: 'chaima',
                 url: 'https://github.com/chaimabondka/achatproject.git'
             }
         }
