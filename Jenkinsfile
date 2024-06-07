@@ -46,8 +46,7 @@ pipeline {
         
         stage('DOCKER BUILD') {
             steps {
-                // Construction de l'image Docker en utilisant le Dockerfile sur la VM
-                sh 'docker build -t chaima12/achat-devops:1.0.0 C:\\Users\\bondk\\OneDrive\\Bureau\\2Alinfo5\\devops\\achat'
+                sh 'docker build -t chaima12/achat-devops:1.0.0 .'
             }
         }
     }
