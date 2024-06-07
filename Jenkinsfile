@@ -61,6 +61,12 @@ pipeline {
                 }
             }
         }
+        stage('Push Docker Image to DockerHub'){
+            steps {
+                sh '''docker login -u molkaadmin -p docker292001
+                      docker push molkaadmin/achatprojet:1.0.0'''
+            }
+        }    
     }
 
     }
