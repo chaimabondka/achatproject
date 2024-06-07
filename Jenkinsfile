@@ -31,7 +31,7 @@ pipeline {
              sh "mvn deploy -DaltDeploymentRepository=releases::default::http://169.254.230.2:8081/repository/maven-releases/"
             }
         }
-        stage('DOCKER BUILD'){
+        stage('DOCKER BUILD') {
             steps {
              sh 'docker build -t chaima12/achat-devops:1.0.0 . -f Dockerfile'
             }
