@@ -1,10 +1,5 @@
 pipeline {
     agent any
-
-     environment {
-        DOCKERFILE_PATH = "C:/Users/bondk/OneDrive/Bureau/2Alinfo5/devops/achat/Dockerfile"
-    }
-    
     // Définition de l'outil Maven
     tools {
         maven 'M2_HOME'
@@ -51,7 +46,7 @@ pipeline {
         stage('DOCKER BUILD') {
             steps { 
                  script {
-                    docker.build("chaima12/achat-devops:1.0.0", "-f ${DOCKERFILE_PATH} .")
+                   docker.build("chaima12/achat-devops:1.0.0", "-f C:\\Users\\bondk\\OneDrive\\Bureau\\2Alinfo5\\devops\\achat\\Dockerfile .")
                 }
             }
         }
