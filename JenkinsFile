@@ -1,0 +1,72 @@
+pipeline {
+    agent any
+    tools  {
+        maven 'M2_HOME'
+       }
+    stages {
+        stage('get_code') {
+            steps {
+                echo 'pulling'
+                git branch: 'ahmed', url: 'https://github.com/chaimabondka/achatproject'
+            }
+        }
+        stage('mvn_clean') {
+            steps {
+                echo 'Running mvn clean'
+                sh 'mvn clean'
+            }
+        }
+        stage('mvn_compile') {
+            steps {
+                echo 'Running mvn compile'
+                sh 'mvn compile'
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                script {
+                    sh 'mvn sonar:sonar \
+                        -Dsonar.host.url=http://192.168.50.2:9000 \
+                        -Dsonar.login=admin \
+                        -Dsonar.password=sonar'
+                }
+            }
+        }
+        stage('mvn_test_mockito') {
+            steps {
+                echo 'Running mvn test'
+                sh 'mvn test'
+            }
+        }
+        stage ('NEXUS') {
+            steps {
+                sh 'mvn deploy'
+            }
+    }
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image'
+                sh 'docker build -t achatimage:latest -f Dockerfile ./'
+                echo "Docker image achatimage:latest built successfully"
+            }
+        }
+        stage ('DOCKER HUB') {
+           steps {
+               sh 'docker login -u ahmedfourati54 -p fouratiahmed54'
+               sh 'docker tag achatimage:latest ahmedfourati54/achatimage:achatimage'
+               sh 'docker push ahmedfourati54/achatimage:achatimage'
+           }
+        }
+         stage ('Run Docker-Compose') {
+            steps {
+               sh 'docker compose up -d'
+            }
+        }
+         stage ('GRAFANA') {
+            steps {
+               echo 'GRAFANA'
+            }
+        }
+
+  }
+}
