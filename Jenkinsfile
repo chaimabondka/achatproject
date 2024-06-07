@@ -56,8 +56,9 @@ pipeline {
         }
          stage('Build Docker Image') {
             steps {
+                dir('/var/lib/jenkins/workspace/Molka_2ALINFO5/achatproject/'){
                 sh 'docker build -t molkaadmin/achatprojet:1.0.0 .'
-                
+                }
             }
         }
     }
