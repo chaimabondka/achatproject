@@ -33,7 +33,8 @@ pipeline {
         }
        stage('DOCKER BUILD') {
             steps {
-             sh 'docker build -t chaima12/achat-devops:1.0.0 . -f Dockerfile'
+             sh "ls -la"
+             sh "docker build -t chaima12/achat-devops:1.0.0 . -f Dockerfile"
            }
         }
     }
