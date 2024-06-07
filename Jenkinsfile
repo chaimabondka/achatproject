@@ -6,6 +6,8 @@ pipeline {
         SONARQUBE_PASSWORD = 'sonar'
         JAVA_HOME = tool name: 'JAVA_HOME', type: 'jdk' // Assurez-vous d'avoir configuré JDK 17 dans Jenkins
         PATH = "${env.JAVA_HOME}/bin:${env.PATH}"
+        PROMETHEUS_CONTAINER = "prometheus-p"
+        GRAFANA_CONTAINER = "grafana"
     }
     tools  {
         maven 'M2_HOME'
@@ -71,6 +73,20 @@ pipeline {
             steps {
                 dir('/var/lib/jenkins/workspace/Molka_2ALINFO5/achatproject/'){
                 sh 'docker compose up -d'
+                }
+            }
+        }
+        stage('Configure Prometheus for Jenkins') {
+            steps {
+                script {
+                    def prometheusConfig = """
+                    - job_name: 'jenkins'
+                      metrics_path: /prometheus
+                      static_configs:
+                      - targets: ['10.6.252.45:8080/']  # Replace with your Jenkins IP
+                    """
+                    sh "docker exec -i ${PROMETHEUS_CONTAINER} sh -c 'echo \"${prometheusConfig}\" >> /etc/prometheus/prometheus.yml'"
+                    sh "docker restart ${PROMETHEUS_CONTAINER}"
                 }
             }
         }
