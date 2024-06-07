@@ -45,17 +45,9 @@ pipeline {
         
         stage('DOCKER BUILD') {
             steps { 
-                 script {
                    sh 'docker build -t  chaima12/achat-devops:1.0.0 .'
-                }
             }
         }
-        stage('Push Docker Image to DockerHub'){
-            steps {
-                sh '''docker login -u  -p docker292001
-                      docker push molkaadmin/achatprojet:1.0.0'''
-            }
-        }   
         stage('DOCKER PUSH'){
             steps {
              sh '''docker login -u chaimabondka123 -p Dockerhub
