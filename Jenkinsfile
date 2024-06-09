@@ -51,20 +51,17 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                }
-                sh 'docker build -t ${registry}:${RELEASE} .'
+                sh 'docker login -u rahmakhamassi/achatproject -p "jenkins2024/"'
+                sh 'docker build -t rahmakhamassi/achatproject:1.0.0 .'
             }
         }
-
         stage('Push Docker Image to DockerHub') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                    sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                }
-                sh 'docker push ${registry}:${RELEASE}'
+                sh 'docker login -u rahmakhamassi/achatproject -p "jenkins2024/"'
+                sh 'docker push rahmakhamassi/achatproject:1.0.0'
             }
         }
+    
+
     }
 }
