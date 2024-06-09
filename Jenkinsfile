@@ -15,7 +15,7 @@ pipeline {
         registryCredential = 'dockerhub'
         dockerImage = ''
         DOCKER_CREDENTIALS_ID = "docker"
-        DOCKER_HOST = 'tcp://localhost:2375'
+        DOCKER_HOST = 'tcp://192.168.109.1:2375'
     }
 
     stages {
