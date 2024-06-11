@@ -57,6 +57,12 @@ pipeline {
                 sh 'docker push rahmakhamassi/achatproject:1.0.0'
             }
         }
+        
+        stage('Run Docker Compose') {
+            steps {
+                sh 'docker compose up -d'
+            }
+        }
     
 
     }
