@@ -60,13 +60,13 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t rahmakhamassi/achatproject-pipeline:1.0.0 .'
+                sh 'docker build -t rahmakhamassi/achatproject:1.0.0 .'
             }
         }
         stage('Push Docker Image to DockerHub') {
             steps {
                 sh 'docker login -u rahmakhamassi -p "jenkins2024/"'
-                sh 'docker push rahmakhamassi/achatproject-pipeline:1.0.0'
+                sh 'docker push rahmakhamassi/achatproject:1.0.0'
             }
         }
         
