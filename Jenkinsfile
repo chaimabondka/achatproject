@@ -36,7 +36,7 @@ pipeline {
                     }
                 }
             }
-        }
+        
 
         
         stage('MAVEN TEST') {
