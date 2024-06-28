@@ -45,17 +45,7 @@ pipeline {
             }
         }
 
-        stage('Maven Deploy') {
-            steps {
-                script {
-                    configFileProvider([configFile(fileId: 'maven', variable: 'MAVEN_SETTINGS')]) {
-                        sh 'mvn clean install --settings $MAVEN_SETTINGS'
-                        sh 'mvn deploy -DskipTests' 
-                    }
-                }
-            }
-        }
-        
+
 
         stage('Build Docker Image') {
             steps {
