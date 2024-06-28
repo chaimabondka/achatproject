@@ -48,8 +48,8 @@ pipeline {
         stage('Maven Deploy') {
             steps {
                 script {
-                    configFileProvider([configFile(fileId: 'cef941ae-22da-4582-8818-63efd8032ded', variable: 'MyGlobalSettings')]) {
-                        sh 'mvn clean install --settings $MyGlobalSettings'
+                    configFileProvider([configFile(fileId: 'maven', variable: 'MAVEN_SETTINGS')]) {
+                        sh 'mvn clean install --settings $MAVEN_SETTINGS'
                         sh 'mvn deploy -DskipTests' 
                     }
                 }
