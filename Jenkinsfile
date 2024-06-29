@@ -26,6 +26,8 @@ pipeline {
         stage('MAVEN BUILD') {
             steps {
                 sh 'mvn clean compile'
+                sh 'mvn clean package'
+
             }
         }
 
